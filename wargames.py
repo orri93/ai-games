@@ -1,9 +1,19 @@
 import asyncio
 import openai
 import os
+import time
+import sys
 
 # Initialize OpenAI client
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
+def typewriter_print(text, delay=0.005):
+    """Print text character by character to simulate retro computer output"""
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(delay)
+    print()  # Add a newline at the end
 
 
 game_instructions = """
@@ -65,7 +75,8 @@ async def main():
 
     # Get AI response
     ai_response = await get_ai_response(messages)
-    print("\n" + ai_response)
+    print()  # Add a blank line before the typewriter output
+    typewriter_print(ai_response)
     
     # Add AI response to conversation history
     messages.append({"role": "assistant", "content": ai_response})
